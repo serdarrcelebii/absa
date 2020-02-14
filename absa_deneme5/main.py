@@ -16,7 +16,7 @@ from nltk.stem import WordNetLemmatizer
 stemmer = PorterStemmer()
 wnl = WordNetLemmatizer()
 import copy
-
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer as SIA
 
 def parse_to_sentence(reviews):
     """
@@ -68,7 +68,7 @@ def parse_to_sentence(reviews):
         only_sent.extend(sent)
     return review_processed, actual, only_sent
 
-data = pd.read_csv('test2.csv')
+data = pd.read_csv('test.csv')
 print(data.head())
 
 
@@ -130,7 +130,7 @@ print(imprt_w)
 imprt_f = imprt_val.set_index('word')['count'].to_dict()
 print(imprt_f)
 
-aspects = ['value','room','location','cleanliness','location']
+aspects = ['value','room','location','cleanliness','service']
 seed1 = ['value', 'price' ]
 seed2 = ['room','space'  ]
 seed3 = [ "location", "locate" ]
@@ -334,4 +334,90 @@ for review in flat_A:
 print('There are {} sentences in the first review'.format(len(review_segs_l[2])))
 print('There are {} labels for the third sentences in the first review'.format(len(review_segs_l[2][0])))
 print('Those labels are {}'.format(review_segs_l[2][0]))
+
+flat_A = list(itertools.chain.from_iterable(A))
+
+
+def get_Wd(review, review_labels):
+    """
+    Get Wd for a review
+    param review: a list of sentences representing a review
+    param review_labels: a list of aspect label(s) for each sentence within this review
+    return Wd: a k × n feature dataframe, where W dij is the frequency of word wj in the text assigned to aspect Ai of d normalized
+    """
+    # create dataframe of Wd
+    word_list = list(
+        itertools.chain.from_iterable(review))  # convert each review from a list of sentences to a list of words
+    rwords = np.unique(word_list)
+    Wd = pd.DataFrame(np.empty(len(rwords)))
+    Wd.index = rwords
+
+    ## group sentences in review to five aspects
+    for a in range(len(aspects) + 1):
+        #         print(a)
+        if a == 0:  # when this sentence doesn't belong to any of the five aspects
+            df = pd.DataFrame([np.nan] * len(rwords))
+            df.index = rwords
+        else:
+            b_index = [a in sublist for sublist in review_labels]
+            sent_index = list(compress(range(len(b_index)), b_index))  # sentence index that belong to aspect a
+            #             print('b index, sent index: ',b_index, sent_index)
+            a_sentences = [review[i] for i in sent_index]
+            a_words = list(itertools.chain.from_iterable(a_sentences))
+            ## compute word frequencies within this aspect, and then normalize the frequency by the toal words in this aspect
+            unique_word, word_freq = np.unique(a_words, return_counts=True)
+            norm_freq = word_freq / len(a_words)
+            # create a dataframe of unique words and norm freq, merge this dataframe to Wd dataframe by columns
+            df = pd.DataFrame(norm_freq)
+            df.index = unique_word
+        Wd = pd.concat([Wd, df], axis=1)
+    # when the Wd matrix is finished,define the column names (aspects), drop the first columns (empty col), then transpose the dataframe to match the shape in Prof. Paper
+    Wd.columns = [0, 'NAN', 'a1', 'a2', 'a3', 'a4', 'a5']
+    Wd = Wd.drop(0, axis=1)
+    Wd = Wd.T
+    return Wd
+
+Wd_list = []
+for r in range(len(flat_A)):
+    Wd_list.append(get_Wd(flat_A[r], review_segs_l[r]))
+
+print(len(Wd_list))
+print(np.nansum(Wd_list[3].loc['a4']))
+print(np.array(Wd_list[3].iloc[2]))
+
+
+sia = SIA()
+
+
+def get_aspect_rating(Wd):
+    """
+    Calculate rating for each aspect for a processed review
+    param Wd: processed review
+    return ratings: an array with rating for each aspect (total five)
+    """
+    polarities = []
+    for word in Wd.columns:
+        polarities.append(sia.polarity_scores(word)['compound'])
+    polarities = np.array(polarities)
+
+    ratings = np.empty((5))
+    for a in range(1, 6):
+        word_freq = np.array(Wd.iloc[a])
+        rating = np.nansum(word_freq * polarities)
+        ratings[a - 1] = rating
+
+    return ratings
+
+aspect_ratings = np.empty((len(Wd_list),5))
+for i in range(len(Wd_list)):
+    Wd = Wd_list[i]
+    aspect_ratings[i] = get_aspect_rating(Wd=Wd)
+
+print(aspect_ratings.shape)
+
+print('Aspect 1-5 Ratings')
+print(aspects)
+aspect_rating_df = pd.DataFrame(aspect_ratings)
+print(aspect_rating_df.head())
+
 

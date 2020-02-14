@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.decomposition import LatentDirichletAllocation
 from utils import *
 from preprocess import *
+
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.decomposition import NMF, LatentDirichletAllocation
 from gensim.models import CoherenceModel
@@ -64,6 +65,17 @@ def train_lda_model_gensim(corpus, total_topics=2):
     lda = models.LdaModel(corpus_tfidf, id2word=dictionary,iterations=1000,num_topics=total_topics)
     #print_coherence(lda,corpus,dictionary)
     return lda
+
+def train_lda_sklearn(norm_corpus,total_topics):
+    vectorizer, tfidf_matrix = build_feature_matrix(norm_corpus,feature_type = 'tfidf')
+    feature_names = vectorizer.get_feature_names()
+    print(feature_names)
+    lda = LatentDirichletAllocation(n_components=total_topics,max_iter = 100, learning_method = 'online', learning_offset = 50.,random_state = 42)
+    lda.fit(tfidf_matrix)
+    weights = lda.components_
+    topics = get_topics_terms_weights(weights, feature_names)
+    print_topics_udf(topics=topics,total_topics = total_topics)
+
 
 def coherence_score(lda,corpus,dictionary):
     coherence_model_lda = CoherenceModel(model=lda, texts=corpus, dictionary=dictionary, coherence='c_v')
