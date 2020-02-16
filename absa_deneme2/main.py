@@ -9,7 +9,7 @@ if __name__ == "__main__":
     documentnotprocess=get_data('test.csv')
     #documents=processed_data()
     #print(documentnotprocess)
-    topic=8
+    topic=5
     tokenize_corpus=normalized_corpus( documentnotprocess['Review'],True)
     nottokenize_corpus=normalized_corpus( documentnotprocess['Review'])
     print(tokenize_corpus)
@@ -26,14 +26,14 @@ if __name__ == "__main__":
     reviews=pd.DataFrame(list(zip(sno, ta, ratings)),columns =['S.No.', 'Review', 'Rating'])
 
     #print_coherence(tokenize_corpus)
-    # print("-----------------------lsi-----------------------------")
-    # lsi=train_lsi_model_gensim(tokenize_corpus,topic)
-    # print_topics_gensim(lsi,topic)
-    # print("-----------------------lda-----------------------------")
-    # lda = train_lda_model_gensim(tokenize_corpus, topic)
-    # print_topics_gensim(lda, topic)
-    # print("-----------------------nmf-----------------------------")
-    # train_nmf_model(nottokenize_corpus,topic)
+    print("-----------------------lsi-----------------------------")
+    lsi=train_lsi_model_gensim(tokenize_corpus,topic)
+    print_topics_gensim(lsi,topic)
+    print("-----------------------lda-----------------------------")
+    lda = train_lda_model_gensim(tokenize_corpus, topic)
+    print_topics_gensim(lda, topic)
+    print("-----------------------nmf-----------------------------")
+    train_nmf_model(nottokenize_corpus,topic)
     #topicwords=dotopicanalysis(nottokenize_corpus,stopword_list,topic)
     aspect_list=[]
     # file = codecs.open('topics.txt', 'r', 'utf-8')
@@ -53,12 +53,12 @@ if __name__ == "__main__":
     #                                 aspect_list.append(j)
     # print(aspect_list)
 
-    rd = ReadData()
-    rd.readAspectSeedWords()
-    rd.readReviewsFromJson(reviews)
-    rd.removeLessFreqWords()
-    print(rd.aspectKeywords)
-    ruunn(rd)
+    # rd = ReadData()
+    # rd.readAspectSeedWords()
+    # rd.readReviewsFromJson(reviews)
+    # rd.removeLessFreqWords()
+    # print(rd.aspectKeywords)
+    # ruunn(rd)
 
     # filew = codecs.open('topics.txt', 'r', 'utf-8')
     # for line in file:
