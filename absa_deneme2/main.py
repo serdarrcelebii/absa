@@ -3,10 +3,11 @@ from similarity import *
 from normalization import *
 from topic_modeling import *
 from plsa import  *
+from lda import  *
 from segmentation import *
 
 if __name__ == "__main__":
-    documentnotprocess=get_data('test.csv')
+    documentnotprocess=get_data('test2.csv')
     #documents=processed_data()
     #print(documentnotprocess)
     topic=5
@@ -34,7 +35,14 @@ if __name__ == "__main__":
     print_topics_gensim(lda, topic)
     print("-----------------------nmf-----------------------------")
     train_nmf_model(nottokenize_corpus,topic)
+<<<<<<< HEAD
     #topicwords=dotopicanalysis(nottokenize_corpus,stopword_list,topic)
+=======
+    print("---------------------skicitlda-------------------------")
+    train_lda_sklearn(nottokenize_corpus,topic)
+    print("---------------------ldaa-------------------------")
+    topicwords=ldaa(nottokenize_corpus,topic)
+>>>>>>> 35258c6474b19649014895278184af3c4823f2c8
     aspect_list=[]
     # file = codecs.open('topics.txt', 'r', 'utf-8')
     # for line in file:
