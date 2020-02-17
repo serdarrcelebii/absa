@@ -176,7 +176,7 @@ def output():
 # set the default params and read the params from cmd
 datasetFilePath = 'test.csv'
 stopwordsFilePath = 'stopwords.dic'
-K = 10  # number of topic
+K = 5  # number of topic
 maxIteration = 30
 threshold = 10.0
 topicWordsNum = 10
