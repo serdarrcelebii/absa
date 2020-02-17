@@ -16,7 +16,6 @@ from nltk.stem import WordNetLemmatizer
 stemmer = PorterStemmer()
 wnl = WordNetLemmatizer()
 import copy
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer as SIA
 
 def parse_to_sentence(reviews):
     """
