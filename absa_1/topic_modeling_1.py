@@ -1,5 +1,4 @@
 import pandas as pd
-import freeze
 data = pd.read_csv('test.csv', error_bad_lines=False);
 data_text = data[['Review']]
 data_text['index'] = data_text.index

@@ -1,0 +1,9 @@
+{"aspects":[
+		{"name":"room", "keywords":["room", "night", "floor", "bed", "bathroom"]},
+		{"name":"beach", "keywords":["beach", "food", "pool", "day", "time", "people", "water"]},
+		{"name":"location", "keywords":["location", "view"]},
+		{"name":"value", "keywords":["value","money","breakfast","price"]}, 
+		{"name":"staff", "keywords":["staff","money","breakfast","price"]},  
+		{"name":"service", "keywords":["service", "stay", "helpful", "friendly", "perfect"]}, 
+		{"name":"place", "keywords":["place", "area", "clean"]}
+	]}

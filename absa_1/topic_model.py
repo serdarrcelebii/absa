@@ -1,5 +1,5 @@
 import pandas as pd
-import freeze
+
 data = pd.read_csv('dataset.csv', error_bad_lines=False);
 data_text = data[['Review']]
 data_text['index'] = data_text.index
@@ -76,7 +76,7 @@ from pprint import pprint
 for doc in corpus_tfidf:
     pprint(doc)
     break
-lda_model = gensim.models.LdaModel(corpus=corpus_tfidf, num_topics=10, id2word=dictionary,
+lda_model = gensim.models.LdaModel(corpus=corpus_tfidf, num_topics=5, id2word=dictionary,
                             passes=1)  # passes= 1 by default? -> MORE PASSES WILL INCREASE ACCURACY
 
 #lda_model = gensim.models.LdaMulticore(corpus_tfidf, num_topics=10, id2word=dictionary, passes=2)

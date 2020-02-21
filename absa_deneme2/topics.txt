@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-room great good small ace nice street service view day 
-room great night staff service desk good location bed time 
-room great good stay night floor time staff reservation service 
-room staff stay great view location place good market desk 
-room location nice staff great good clean bed desk night 
-=======
-room good stay floor staff night elevator desk view clean 
+room good stay floor staff night elevator desk view clean
 room staff night desk nice good morning time great service 
 room great location staff service night bed place stay view 
 room location nice great view restaurant service staff place good 
 room great location market staff stay good inn comfortable area 
->>>>>>> 35258c6474b19649014895278184af3c4823f2c8
+

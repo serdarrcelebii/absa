@@ -2,7 +2,6 @@ import re
 import string
 import nltk
 from nltk.stem import WordNetLemmatizer
-from pattern.text.en import tag
 import pandas as pd
 nltk.download('averaged_perceptron_tagger')
 from nltk.corpus import wordnet as wn

@@ -57,7 +57,7 @@ corpus = [dictionary.doc2bow(text) for text in texts]
 
 
 from gensim import models
-model = models.ldamodel.LdaModel(corpus, num_topics=10, id2word=dictionary, passes=15)
+model = models.ldamodel.LdaModel(corpus, num_topics=5, id2word=dictionary, passes=15)
 
 topics = model.print_topics(num_words=10)
 for topic in topics:
