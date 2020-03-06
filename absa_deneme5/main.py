@@ -67,7 +67,7 @@ def parse_to_sentence(reviews):
         only_sent.extend(sent)
     return review_processed, actual, only_sent
 
-data = pd.read_csv('test.csv')
+data = pd.read_csv('test2.csv')
 print(data.head())
 
 
@@ -385,7 +385,6 @@ print(np.nansum(Wd_list[3].loc['a4']))
 print(np.array(Wd_list[3].iloc[2]))
 
 
-sia = SIA()
 
 
 def get_aspect_rating(Wd):
