@@ -9,7 +9,7 @@ if __name__ == "__main__":
     documentnotprocess=get_data('test2.csv')
     #documents=processed_data()
     #print(documentnotprocess)
-    topic=8
+    topic=4
     tokenize_corpus=normalized_corpus( documentnotprocess['Review'],True)
     nottokenize_corpus=normalized_corpus( documentnotprocess['Review'])
     print(tokenize_corpus)
@@ -26,15 +26,15 @@ if __name__ == "__main__":
     reviews=pd.DataFrame(list(zip(sno, ta, ratings)),columns =['S.No.', 'Review', 'Rating'])
 
     #print_coherence(tokenize_corpus)
-    # print("-----------------------lsi-----------------------------")
-    # lsi=train_lsi_model_gensim(tokenize_corpus,topic)
-    # print_topics_gensim(lsi,topic)
-    # print("-----------------------lda-----------------------------")
-    # lda = train_lda_model_gensim(tokenize_corpus, topic)
-    # print_topics_gensim(lda, topic)
-    # print("-----------------------nmf-----------------------------")
-    # train_nmf_model(nottokenize_corpus,topic)
-    #topicwords=dotopicanalysis(nottokenize_corpus,stopword_list,topic)1
+    print("-----------------------lsi-----------------------------")
+    lsi=train_lsi_model_gensim(tokenize_corpus,topic)
+    print_topics_gensim(lsi,topic)
+    print("-----------------------lda-----------------------------")
+    lda = train_lda_model_gensim(tokenize_corpus, topic)
+    print_topics_gensim(lda, topic)
+    print("-----------------------nmf-----------------------------")
+    train_nmf_model(nottokenize_corpus,topic)
+    # topicwords=dotopicanalysis(nottokenize_corpus,stopword_list,topic)1
     # aspect_list
     # file = codecs.open('topics.txt', 'r', 'utf-8')
     # for line in file:

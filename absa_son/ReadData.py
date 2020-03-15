@@ -17,7 +17,7 @@ import string
 from Sentence import Sentence
 from Review import Review
 
-aspects=["room","beach","location","value","staff","service","place"]
+aspects=["room","beach","location","service"]
 class ReadData:
     def __init__(self):
         self.aspectKeywords = {} #aspect name <--> keywords list
