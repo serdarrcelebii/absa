@@ -8,7 +8,7 @@ nltk.download('averaged_perceptron_tagger')
 from nltk.corpus import wordnet as wn
 
 stopword_list = nltk.corpus.stopwords.words('english')
-stopword_list +=  'london', 'kong', 'hong', 'colonial', 'cathedral', 'barcelo', 'barcelona', 'hotelscom', 'majestic', 'hyde', 'hurricane', 'toliet','venice', 'cana', 'punta','caribbean', 'dominican','madrid', 'moscone','tanktop','chancellor','resort','casablanca', 'york','francisco','orleans','juan','puerto','rico','ritz','maria','rosa','ther', 'nightsgreat','delivered','711', 'satisfactory','new','intercontinental', 'cambridge','milano','toronto','monaco','seattle','hotel','lot','\n','able','100','nyc','inn','san','warwick','kimpton','collectible', 'treasure', 'windham','mexico', 'weekthe', 'rooftop'
+stopword_list += 'hostel','friendlythe','london', 'kong', 'hong', 'colonial', 'cathedral', 'barcelo', 'barcelona', 'hotelscom', 'majestic', 'hyde', 'hurricane', 'toliet','venice', 'cana', 'punta','caribbean', 'dominican','madrid', 'moscone','tanktop','chancellor','resort','casablanca', 'york','francisco','orleans','juan','puerto','rico','ritz','maria','rosa','ther', 'nightsgreat','delivered','711', 'satisfactory','new','intercontinental', 'cambridge','milano','toronto','monaco','seattle','hotel','lot','\n','able','100','nyc','inn','san','warwick','kimpton','collectible', 'treasure', 'windham','mexico', 'weekthe', 'rooftop'
 wnl = WordNetLemmatizer()
 
 

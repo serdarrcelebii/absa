@@ -6,7 +6,7 @@ from ReadData import *
 from Review import *
 
 if __name__ == "__main__":
-    documentnotprocess=get_data('test2.csv')
+    documentnotprocess=get_data('test.csv')
     #documents=processed_data()
     #print(documentnotprocess)
     topic=4
@@ -25,7 +25,11 @@ if __name__ == "__main__":
         index=index+1
     reviews=pd.DataFrame(list(zip(sno, ta, ratings)),columns =['S.No.', 'Review', 'Rating'])
 
+<<<<<<< HEAD
     #print_coherence(tokenize_corpus)
+=======
+    print_coherence(tokenize_corpus)
+>>>>>>> 3a185f6c65b26f67ee0fad06eca135619788a0da
     print("-----------------------lsi-----------------------------")
     lsi=train_lsi_model_gensim(tokenize_corpus,topic)
     print_topics_gensim(lsi,topic)
@@ -34,7 +38,11 @@ if __name__ == "__main__":
     print_topics_gensim(lda, topic)
     print("-----------------------nmf-----------------------------")
     train_nmf_model(nottokenize_corpus,topic)
+<<<<<<< HEAD
     # topicwords=dotopicanalysis(nottokenize_corpus,stopword_list,topic)1
+=======
+    #topicwords=dotopicanalysis(nottokenize_corpus,stopword_list,topic)1
+>>>>>>> 3a185f6c65b26f67ee0fad06eca135619788a0da
     # aspect_list
     # file = codecs.open('topics.txt', 'r', 'utf-8')
     # for line in file:
