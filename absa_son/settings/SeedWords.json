@@ -1,6 +1,14 @@
 {"aspects":[
+<<<<<<< HEAD
+		{"name":"room", "keywords":["room", "night", "floor", "bed", "bathroom","stay"]},
+		{"name":"beach", "keywords":["beach","food","pool"]},
+		{"name":"location", "keywords":["location", "view"]},
+		{"name":"service", "keywords":["service", "stay", "helpful", "friendly", "perfect"]}
+]}
+=======
 		{"name":"room", "keywords":["room", "night", "floor", "bed", "bathroom"]},
 		{"name":"location", "keywords":["location", "view"]},
 		{"name":"value", "keywords":["value","money","breakfast","price"]},
 		{"name":"service", "keywords":["service", "stay", "helpful", "friendly", "perfect"]}
 	]}
+>>>>>>> 3a185f6c65b26f67ee0fad06eca135619788a0da
