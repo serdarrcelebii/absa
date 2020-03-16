@@ -16,6 +16,7 @@ from nltk.stem import WordNetLemmatizer
 stemmer = PorterStemmer()
 wnl = WordNetLemmatizer()
 import copy
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 def parse_to_sentence(reviews):
     """
@@ -67,7 +68,7 @@ def parse_to_sentence(reviews):
         only_sent.extend(sent)
     return review_processed, actual, only_sent
 
-data = pd.read_csv('test2.csv')
+data = pd.read_csv('dataset.csv')
 print(data.head())
 
 
@@ -129,13 +130,13 @@ print(imprt_w)
 imprt_f = imprt_val.set_index('word')['count'].to_dict()
 print(imprt_f)
 
-aspects = ['value','room','location','cleanliness','service']
-seed1 = ['value', 'price' ]
-seed2 = ['room','space'  ]
-seed3 = [ "location", "locate" ]
-seed4 = [ "clean", "dirty" ]
-seed5 = [ 'service', 'manager' ]
-seeds = [seed1, seed2, seed3, seed4, seed5]
+aspects = ["room","location","value","service"]
+seed3 = ['value', 'price' ]
+seed1 = ['room','space'  ]
+seed2 = [ "location", "locate" ]
+# seed4 = [ "clean", "dirty" ]
+seed4 = [ 'service', 'manager' ]
+seeds = [seed1, seed2, seed3, seed4]
 
 # label each sentence with an aspect
 def step1n2(keyword_list,sentence_list = flat_C):
@@ -240,17 +241,17 @@ a0_Cvalue_matrix =matrix_list[0]
 a1_Cvalue_matrix =matrix_list[1]
 a2_Cvalue_matrix =matrix_list[2]
 a3_Cvalue_matrix =matrix_list[3]
-a4_Cvalue_matrix =matrix_list[4]
+# a4_Cvalue_matrix =matrix_list[4]
 
 a0_Cvalue_matrix = np.array(a0_Cvalue_matrix)
 a1_Cvalue_matrix = np.array(a1_Cvalue_matrix)
 a2_Cvalue_matrix = np.array(a2_Cvalue_matrix)
 a3_Cvalue_matrix = np.array(a3_Cvalue_matrix)
-a4_Cvalue_matrix = np.array(a4_Cvalue_matrix)
-print(a1_Cvalue_matrix.shape,a2_Cvalue_matrix.shape,a3_Cvalue_matrix.shape,a4_Cvalue_matrix.shape)
+# a4_Cvalue_matrix = np.array(a4_Cvalue_matrix)
+print(a1_Cvalue_matrix.shape,a2_Cvalue_matrix.shape,a3_Cvalue_matrix.shape )
 
 
-matrix_list = [a0_Cvalue_matrix,a1_Cvalue_matrix,a2_Cvalue_matrix,a3_Cvalue_matrix,a4_Cvalue_matrix]
+matrix_list = [a0_Cvalue_matrix,a1_Cvalue_matrix,a2_Cvalue_matrix,a3_Cvalue_matrix ]
 c_matrix  = np.array(matrix_list)
 print(c_matrix.shape)
 
@@ -369,9 +370,9 @@ def get_Wd(review, review_labels):
             # create a dataframe of unique words and norm freq, merge this dataframe to Wd dataframe by columns
             df = pd.DataFrame(norm_freq)
             df.index = unique_word
-        Wd = pd.concat([Wd, df], axis=1)
+        Wd = pd.concat([Wd, df], axis=1,sort=False)
     # when the Wd matrix is finished,define the column names (aspects), drop the first columns (empty col), then transpose the dataframe to match the shape in Prof. Paper
-    Wd.columns = [0, 'NAN', 'a1', 'a2', 'a3', 'a4', 'a5']
+    Wd.columns = [0, 'NAN', 'a1', 'a2', 'a3', 'a4']
     Wd = Wd.drop(0, axis=1)
     Wd = Wd.T
     return Wd
@@ -381,11 +382,12 @@ for r in range(len(flat_A)):
     Wd_list.append(get_Wd(flat_A[r], review_segs_l[r]))
 
 print(len(Wd_list))
+print(Wd_list[3])
 print(np.nansum(Wd_list[3].loc['a4']))
 print(np.array(Wd_list[3].iloc[2]))
 
 
-
+sia = SentimentIntensityAnalyzer()
 
 def get_aspect_rating(Wd):
     """
@@ -417,5 +419,26 @@ print('Aspect 1-5 Ratings')
 print(aspects)
 aspect_rating_df = pd.DataFrame(aspect_ratings)
 print(aspect_rating_df.head())
+
+review_rating = data['Rating'].astype(int)
+overall_rating_dist = (np.mean( review_rating),np.std(review_rating))
+print('mean: ', np.mean(review_rating),'std: ',np.std(review_rating))
+review_rating.hist(bins =  10)
+plt.show()
+
+aspect_rating_dist = []
+for i in range(5):
+    aspect_rating_df[i].hist()
+    mu = np.nanmean(aspect_rating_df[i])
+    sigma = np.nanstd(aspect_rating_df[i])
+    aspect_rating_dist.append((mu,sigma))
+    print('mu: ',mu,'sigma: ',sigma)
+    plt.title('Aspect "{}" Rating Dist.'.format(aspects[i]))
+    plt.show()
+
+# when there is no aspect weighting (i.e. every aspect weight the same for each reviewer)
+# the relationship between sum(aspect scores) and overall scores are:
+plt.plot(aspect_rating_df.sum(axis = 1), review_rating,'o',alpha = 0.1)
+plt.show()
 
 
