@@ -17,7 +17,11 @@ import string
 from Sentence import Sentence
 from Review import Review
 
+<<<<<<< HEAD
+aspects=["room","location","value","service"]
+=======
 aspects=["room","beach","location","service"]
+>>>>>>> 1f5300411ab5d1a256843a0a21af447a9f6c1ddf
 class ReadData:
     def __init__(self):
         self.aspectKeywords = {} #aspect name <--> keywords list
